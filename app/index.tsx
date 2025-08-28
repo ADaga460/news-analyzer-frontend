@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, ActivityIndicator, KeyboardAvoidingView, Platform } from "react-native";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
 
+
 export default function HomeScreen() {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,7 +20,7 @@ export default function HomeScreen() {
     translateY.value = withTiming(-150, { duration: 800 });
 
     try {
-      const res = await fetch(`http://127.0.0.1:8000/analyze?url=${encodeURIComponent(url)}`);
+      const res = await fetch(`https://news-analyzer-backend.vercel.app/api/analyze?url=${encodeURIComponent(url)}`);
       const data = await res.json();
       setResult(data.result || data.error || "No result");
     } catch (err) {
