@@ -20,7 +20,11 @@ export default function HomeScreen() {
     translateY.value = withTiming(-150, { duration: 800 });
 
     try {
-      const res = await fetch(`https://news-analyzer-backend-23es.onrender.com/api/analyze?url=${encodeURIComponent(url)}`);
+      const res = await fetch(`https://news-analyzer-backend-23es.onrender.com/api/analyze`, {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ url }),
+                        })
       const data = await res.json();
       setResult(data.result || data.error || "No result");
     } catch (err) {
