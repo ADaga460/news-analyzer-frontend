@@ -15,18 +15,31 @@ export default function HomeScreen() {
     if (!url) return;
     setLoading(true);
     setResult(null);
-
-    // animate textbox upwards
     translateY.value = withTiming(-150, { duration: 800 });
-
+  
     try {
-      const res = await fetch(`https://news-analyzer-backend-23es.onrender.com/api/analyze`, {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({ url }),
-                        })
-      const data = await res.json();
-      setResult(data.result || data.error || "No result");
+      // Step 1: Extract article text
+      const res1 = await fetch(`https://news-analyzer-backend-23es.onrender.com/api/extract`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+      const data1 = await res1.json();
+  
+      if (!data1.article_text) {
+        setResult(data1.error || "Failed to extract article text.");
+        return;
+      }
+  
+      // Step 2: Send extracted text for analysis
+      const res2 = await fetch(`https://news-analyzer-backend-23es.onrender.com/api/analyze-text`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: data1.article_text }),
+      });
+      const data2 = await res2.json();
+  
+      setResult(data2.analysis || data2.error || "No result");
     } catch (err) {
       setResult("Error connecting to backend");
       console.log(err);
