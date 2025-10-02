@@ -60,7 +60,8 @@ export default function HomeScreen() {
         return;
       }
       // poll extraction job
-      const articleText = await pollJob(j1.job_id, 180000, 1500); // 3 min timeout
+      const articleText = await pollJob(j1.job_id, 180000, 1500);
+      console.log("Extracted text length:", articleText?.length);
       // Step 2: submit text for analysis (background job)
       const res2 = await fetch(`${BACKEND}/api/analyze-text`, {
         method: "POST",
