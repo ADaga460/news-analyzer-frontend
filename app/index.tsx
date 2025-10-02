@@ -1,6 +1,15 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, TouchableOpacity, ScrollView, ActivityIndicator, KeyboardAvoidingView, Platform } from "react-native-gesture-handler";
-import { Animated, useSharedValue, useAnimatedStyle, withTiming } from "react-native";
+// Import from gesture-handler is fine for the components it needs
+import { TextInput, Text, TouchableOpacity, ScrollView } from "react-native-gesture-handler"; 
+import { withTiming, useSharedValue, useAnimatedStyle } from "react-native-reanimated";
+// Combined imports from react-native
+import { 
+  Animated, 
+  ActivityIndicator, 
+  Platform, 
+  KeyboardAvoidingView, 
+  View 
+} from "react-native"; 
 
 
 export default function HomeScreen() {
@@ -82,9 +91,8 @@ export default function HomeScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}
+      className="flex-1 bg-white items-center justify-center"
       behavior={Platform.OS === "ios" ? "padding" : undefined}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0} // Add this line for better handling
     >
       <Animated.View style={[animatedBoxStyle, { width: "90%" }]}>
         <TextInput
