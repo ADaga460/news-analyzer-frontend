@@ -20,8 +20,8 @@ export default function HomeScreen() {
   const translateY = useSharedValue(0);
 
   // inside your HomeScreen component
-  const BACKEND = /*https://news-analyzer-backend-23es.onrender.com || */ "http://127.0.0.1:8000";
-
+  const BACKEND = "https://news-analyzer-backend-23es.onrender.com";
+  
   // LOG ADDITION: Added logs to track polling state
   async function pollJob(jobId: string, timeoutMs = 120000, intervalMs = 1500) {
     console.log(`[Frontend Poll] Starting poll for job ID: ${jobId}`);
